@@ -8,10 +8,21 @@
 :root {
   font-size: 62.5%;
   --bg: #fbfaff;
+  --bg-white: #FFF;
   --bg-input-file: #f3f0ff;
+  --bg-file-loading: #E9E3F8;
+  --bg-file-loaded: #DAF2D9;
+  --bg-file-error: #F2D9D9;
+  --bg-bar-loaded: #73B172;
+  --bg-bar-error: #E3E3ED;
   --color-border-input-file: #c1b2fa;
   --color-title: #7a5fec;
   --color-subtitle: #746e82;
+  --color-file-tile: #575361;
+  --color-file-subtitle: #857E95;
+  --color-msg-error: #E36363;
+  --color-msg-loaded: #4E884D;
+  --color-msg-loading: #9892A6;
 }
 
 body {
@@ -64,5 +75,121 @@ header div {
   text-align: center;
 }
 
-input[type="file"] {
+aside {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  max-width: 44rem;
+  width: 100%;
+}
+
+article {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+
+  background-color: var(--bg-white);
+  max-width: 100%;
+  height: 7.2rem;
+  padding: 0.8rem;
+  border-radius: 0.8rem;
+}
+
+article div:nth-child(2) {
+  width: 36.4rem;
+}
+
+article div:nth-child(2) p {
+  font-weight: 700;
+  font-size: 1.4rem;
+  line-height: 130%;
+  color: var(--color-file-tile);
+}
+
+article div:nth-child(2) span {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 130%;
+  color: var(--color-file-subtitle);
+}
+
+footer {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.barLoading {
+  background: linear-gradient(90deg, rgba(58, 97, 237, 0.52) 0%, #7C3AED 100%);
+  height: 0.8rem;
+  width: 100%;
+  border-radius: 999px;
+}
+
+.barLoaded {
+  background: var(--bg-bar-loaded);
+  height: 0.8rem;
+  width: 100%;
+  border-radius: 999px;
+}
+
+.barError {
+  background: var(--bg-bar-error);
+  height: 0.8rem;
+  width: 100%;
+  border-radius: 999px;
+}
+
+.bgLoading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 4.8rem;
+  height: 5.6rem;
+  background-color: var(--bg-file-loading);
+  border-radius: 0.4rem;
+}
+
+.bgLoaded {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 4.8rem;
+  height: 5.6rem;
+  background-color: var(--bg-file-loaded);
+  border-radius: 0.4rem;
+}
+
+.bgError {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 4.8rem;
+  height: 5.6rem;
+  background-color: var(--bg-file-error);
+  border-radius: 0.4rem;
+}
+
+#msgLoading {
+  font-weight: 500;
+  font-size: 1.2rem;
+  line-height: 130%;
+  color: var(--color-msg-loading);
+}
+
+#msgLoaded {
+  font-weight: 500;
+  font-size: 1.2rem;
+  line-height: 130%;
+  color: var(--color-msg-loaded);
+}
+
+#msgError {
+  font-weight: 500;
+  font-size: 1.2rem;
+  line-height: 130%;
+  color: var(--color-msg-error);
 }

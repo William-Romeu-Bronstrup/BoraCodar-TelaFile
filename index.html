@@ -28,17 +28,47 @@
         </div>
         <input type="file" name="" id="" />
       </header>
-
+      
       <aside>
         <article>
-          <img src="" alt="" />
+          <div class="bgLoading">
+            <img src="./assets/loadFile.svg" alt="Imagem representando um arquivo carregando" />
+          </div>
           <div>
-            <p>arquivo</p>
-            <span>30mb / 74mb</span>
+            <p>Scann_158.pdf</p>
+            <span>30 MB / 74 MB</span>
 
             <footer>
-              <div></div>
-              <span>46%</span>
+              <div class="barLoading"></div>
+              <span id="msgLoading">46%</span>
+            </footer>
+          </div>
+        </article>
+        <article>
+          <div class="bgLoaded">
+            <img src="./assets/loadedFile.svg" alt="Imagem representando um arquivo carregado" />
+          </div>
+          <div>
+            <p>README.rm</p>
+            <span>12 KB</span>
+
+            <footer>
+              <div class="barLoaded"></div>
+              <span id="msgLoaded">100%</span>
+            </footer>
+          </div>
+        </article>
+        <article>
+          <div class="bgError">
+            <img src="./assets/errorFile.svg" alt="Imagem representando um arquivo que não foi carregado" />
+          </div>
+          <div>
+            <p>picture1.jpeg</p>
+            <span>6.3 MB</span>
+
+            <footer>
+              <div class="barError"></div>
+              <span id="msgError">Erro</span>
             </footer>
           </div>
         </article>
