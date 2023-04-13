@@ -27,7 +27,7 @@
           <h1>Importe seus arquivos</h1>
           <p>Arraste ou clique para fazer upload</p>
         </div>
-        <input type="file" name="" id="inputFile" multiple/>
+        <input type="file" name="" id="inputFile"/>
       </header>
       
       <aside>
@@ -40,7 +40,7 @@
             <span>30 MB / 74 MB</span>
 
             <footer>
-              <div class="barLoading"></div>
+              <progress class="barLoading" max="100" value="90"></progress>
               <span id="msgLoading">46%</span>
             </footer>
           </div>
@@ -54,7 +54,7 @@
             <span>12 KB</span>
 
             <footer>
-              <div class="barLoaded"></div>
+              <progress class="barLoaded" max="100" value="90"></progress>
               <span id="msgLoaded">100%</span>
             </footer>
           </div>
@@ -68,7 +68,7 @@
             <span>6.3 MB</span>
 
             <footer>
-              <div class="barError"></div>
+              <progress class="barError" max="0" value="0"></progress>
               <span id="msgError">Erro</span>
             </footer>
           </div>
