@@ -8,21 +8,21 @@
 :root {
   font-size: 62.5%;
   --bg: #fbfaff;
-  --bg-white: #FFF;
+  --bg-white: #fff;
   --bg-input-file: #f3f0ff;
-  --bg-file-loading: #E9E3F8;
-  --bg-file-loaded: #DAF2D9;
-  --bg-file-error: #F2D9D9;
-  --bg-bar-loaded: #73B172;
-  --bg-bar-error: #E3E3ED;
+  --bg-file-loading: #e9e3f8;
+  --bg-file-loaded: #daf2d9;
+  --bg-file-error: #f2d9d9;
+  --bg-bar-loaded: #73b172;
+  --bg-bar-error: #e3e3ed;
   --color-border-input-file: #c1b2fa;
   --color-title: #7a5fec;
   --color-subtitle: #746e82;
   --color-file-tile: #575361;
-  --color-file-subtitle: #857E95;
-  --color-msg-error: #E36363;
-  --color-msg-loaded: #4E884D;
-  --color-msg-loading: #9892A6;
+  --color-file-subtitle: #857e95;
+  --color-msg-error: #e36363;
+  --color-msg-loaded: #4e884d;
+  --color-msg-loading: #9892a6;
 }
 
 body {
@@ -116,6 +116,7 @@ article div:nth-child(2) span {
 footer {
   display: flex;
   align-items: center;
+  line-height: 0;
   gap: 0.8rem;
 }
 
@@ -128,14 +129,12 @@ progress {
 
 .barLoading::-webkit-progress-bar {
   background-color: var(--bg-bar-error);
-  height: 0.8rem;
   width: 100%;
   border-radius: 999px;
 }
 
 .barLoading::-webkit-progress-value {
-  background: linear-gradient(90deg, rgba(58, 97, 237, 0.52) 0%, #7C3AED 100%);
-  height: 0.8rem;
+  background: linear-gradient(90deg, rgba(58, 97, 237, 0.52) 0%, #7c3aed 100%);
   width: 100%;
   border-radius: 999px;
 }
@@ -223,4 +222,23 @@ progress {
   font-size: 1.2rem;
   line-height: 130%;
   color: var(--color-msg-error);
+}
+
+#downloadFile a {
+  text-decoration: none;
+
+  background-color: var(--bg-input-file);
+  padding: 8px 8px;
+  border-radius: 5px;
+  letter-spacing: 0.3px;
+
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-title);
+  transition: all 0.2s;
+}
+
+#downloadFile a:hover {
+  color: var(--bg-white);
+  background-color: var(--color-title);
 }
