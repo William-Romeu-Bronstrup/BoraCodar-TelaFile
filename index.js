@@ -1,27 +1,24 @@
-const inputFile = document.getElementById("inputFile");
-
-console.log(inputFile)
+const inputFile = document.getElementById("inputFile")
 
 //change
-let files = [];
+let file = {}
 inputFile.addEventListener("change", (e) => {
-  /*console.log(e.target.files)
-  console.log(e.target.files[0])
-  console.log(e.target.files[0].name)*/
+  file.name = e.target.files[0].name
+  file.size = transformSize(e.target.files[0].size)
+  file.file = e.target.files[0]
 
-  files.push(e.target.files)
+  const leitor = new FileReader()
 
-  
-  for (let i = 0; i < files.length; i++) {
-    console.log(files[i][i].name)
-  }
- 
-  /*files.map((e) => {
-    console.log(e.name)
+  console.log(file)
+  leitor.addEventListener("load", function () {
+    console.log(leitor)
   })
 
-  for (let name in files) {
-    console.log(name)
-  }*/
-    
+  if (file.file) {
+    leitor.readAsText(file.file)
+  }
 })
+
+function transformSize(size) {
+  return `${(size / Math.floor(Math.pow(10, 6))).toFixed(2)} MB`
+}
