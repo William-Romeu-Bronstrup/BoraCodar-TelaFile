@@ -2,13 +2,10 @@ const mainTag = document.querySelector("main")
 const inputFile = document.getElementById("inputFile")
 const cardNameOfFile = document.querySelector("article div > p")
 const cardSizeOfFile = document.querySelector("article div > span")
-
 const cardImg = document.getElementById("imgFile")
 const bgOfcardImg = document.querySelector(".bgLoading")
 const porcentageOfcardFile = document.getElementById("msgLoading")
-
 const downloadFile = document.getElementById("downloadFile")
-
 const progressBar = document.querySelector(".barLoading")
 
 //change
@@ -24,7 +21,6 @@ inputFile.addEventListener("change", (e) => {
     file.file = e.target.files[0]
 
     const leitor = new FileReader()
-    console.log(leitor.DONE)
 
     cardNameOfFile.textContent = file.name
     cardSizeOfFile.textContent = file.size
@@ -39,8 +35,7 @@ async function readingFile(leitor) {
   try {
     await leitor.readAsText(file.file)
     await leitor.addEventListener("load", () => {
-      let result = leitor.result
-      return creatingTagAToDownload(result, file.name)
+      return creatingTagAToDownload(leitor.result, file.name)
     })
 
     leitor.addEventListener("loadstart", () => {
@@ -99,6 +94,7 @@ function transformSize(size) {
   }
 }
 
+/*Estilos do card */
 function setStylesToDefault() {
   progressBar.value = 0
   cardImg.setAttribute("src", "assets/loadFile.svg")

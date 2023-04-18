@@ -102,6 +102,7 @@ article {
 
 article div:nth-child(2) {
   width: 36.4rem;
+  position: relative;
 }
 
 article div:nth-child(2) p {
