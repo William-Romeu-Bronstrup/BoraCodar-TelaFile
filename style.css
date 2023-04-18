@@ -120,6 +120,7 @@ article div:nth-child(2) span {
 
 footer {
   display: flex;
+  /*align-items: end;*/
   align-items: center;
   line-height: 0;
   gap: 0.8rem;
@@ -144,12 +145,14 @@ input[type="file"] {
 
 .barLoading::-webkit-progress-bar {
   background-color: var(--bg-bar-error);
+  height: 0.8rem;
   width: 100%;
   border-radius: 999px;
 }
 
 .barLoading::-webkit-progress-value {
   background: linear-gradient(90deg, rgba(58, 97, 237, 0.52) 0%, #7c3aed 100%);
+  height: 0.8rem;
   width: 100%;
   border-radius: 999px;
 }
@@ -195,47 +198,22 @@ input[type="file"] {
 }
 
 .bgLoaded {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 0;
-
-  width: 4.8rem;
-  height: 5.6rem;
   background-color: var(--bg-file-loaded);
-  border-radius: 0.4rem;
 }
 
 .bgError {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 0;
-
-  width: 4.8rem;
-  height: 5.6rem;
   background-color: var(--bg-file-error);
-  border-radius: 0.4rem;
 }
 
 #msgLoading {
-  font-weight: 500;
-  font-size: 1.2rem;
-  line-height: 130%;
   color: var(--color-msg-loading);
 }
 
 #msgLoaded {
-  font-weight: 500;
-  font-size: 1.2rem;
-  line-height: 130%;
   color: var(--color-msg-loaded);
 }
 
 #msgError {
-  font-weight: 500;
-  font-size: 1.2rem;
-  line-height: 130%;
   color: var(--color-msg-error);
 }
 
