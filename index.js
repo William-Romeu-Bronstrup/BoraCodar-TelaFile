@@ -9,6 +9,14 @@ const downloadFile = document.getElementById("downloadFile")
 const progressBar = document.querySelector(".barLoading")
 
 //change
+/*
+Teste
+let obj = {
+      name: e.target.files[0].name,
+      size: transformSize(e.target.files[0].size),
+      file: e.target.files[0],
+    }
+*/
 let file = {}
 inputFile.addEventListener("change", (e) => {
   while (downloadFile.hasChildNodes()) {
