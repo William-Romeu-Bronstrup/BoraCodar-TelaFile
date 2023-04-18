@@ -15,6 +15,7 @@
   --bg-file-error: #f2d9d9;
   --bg-bar-loaded: #73b172;
   --bg-bar-error: #e3e3ed;
+  --bg-header-hover: #ebe6ff;
   --color-border-input-file: #c1b2fa;
   --color-title: #7a5fec;
   --color-subtitle: #746e82;
@@ -38,7 +39,13 @@ main {
   gap: 2rem;
 }
 
-main > header {
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+  position: relative;
+
   max-width: 44rem;
   max-height: 16rem;
   width: 100%;
@@ -47,13 +54,11 @@ main > header {
   background-color: var(--bg-input-file);
   border: 1px dashed var(--color-border-input-file);
   border-radius: 8px;
+  transition: 0.2s;
 }
 
-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  flex-direction: column;
+header:hover {
+  background-color: var(--bg-header-hover);
 }
 
 header div h1 {
@@ -125,6 +130,16 @@ progress {
   -webkit-appearance: none;
   appearance: none;
   overflow: hidden;
+}
+
+input[type="file"] {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  visibility: 0;
+  top: 0;
+  cursor: pointer;
 }
 
 .barLoading::-webkit-progress-bar {
