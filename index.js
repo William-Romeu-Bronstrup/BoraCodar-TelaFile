@@ -28,6 +28,8 @@ inputFile.addEventListener("change", (e) => {
     file.size = transformSize(e.target.files[0].size)
     file.file = e.target.files[0]
 
+    console.log(file)
+
     const leitor = new FileReader()
 
     cardNameOfFile.textContent = file.name
