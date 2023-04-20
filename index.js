@@ -1,51 +1,59 @@
 const mainTag = document.querySelector("main")
 const inputFile = document.getElementById("inputFile")
+// Mudar a forma de como buscar os elementos para não atrapalhar os que virão
 const cardNameOfFile = document.querySelector("article div > p")
 const cardSizeOfFile = document.querySelector("article div > span")
+
 const cardImg = document.getElementById("imgFile")
 const bgOfcardImg = document.querySelector(".bgLoading")
 const porcentageOfcardFile = document.getElementById("msgLoading")
 const downloadFile = document.getElementById("downloadFile")
 const progressBar = document.querySelector(".barLoading")
 
-//change
-/*
-Teste
-let obj = {
-      name: e.target.files[0].name,
-      size: transformSize(e.target.files[0].size),
-      file: e.target.files[0],
-    }
-*/
-let file = {}
+let file = []
+
+!(function () {
+  let getData = localStorage.getItem("file")
+
+  if (getData) {
+    file.push(...JSON.parse(getData))
+  }
+})()
+
+function buildCards() {}
+
 inputFile.addEventListener("change", (e) => {
   while (downloadFile.hasChildNodes()) {
     downloadFile.removeChild(downloadFile.firstChild)
   }
 
   if (e.target.files[0] != undefined) {
-    file.name = e.target.files[0].name
-    file.size = transformSize(e.target.files[0].size)
-    file.file = e.target.files[0]
+    let obj = {
+      name: e.target.files[0].name,
+      size: transformSize(e.target.files[0].size),
+      file: e.target.files[0],
+    }
 
-    console.log(file)
+    cardNameOfFile.textContent = obj.name
+    cardSizeOfFile.textContent = obj.size
+
+    file.push(obj)
 
     const leitor = new FileReader()
 
-    cardNameOfFile.textContent = file.name
-    cardSizeOfFile.textContent = file.size
+    readingFile(leitor, obj)
 
-    readingFile(leitor)
+    localStorage.setItem("file", JSON.stringify(file))
   } else {
     addStylesWhenFileIsError()
   }
 })
 
-async function readingFile(leitor) {
+async function readingFile(leitor, obj) {
   try {
-    await leitor.readAsText(file.file)
+    await leitor.readAsText(obj.file)
     await leitor.addEventListener("load", () => {
-      return creatingTagAToDownload(leitor.result, file.name)
+      return creatingTagAToDownload(leitor.result, obj.name)
     })
 
     leitor.addEventListener("loadstart", () => {
@@ -117,7 +125,6 @@ function setStylesToDefault() {
 }
 
 function addStylesWhenFileIsError() {
-  console.log(file.name)
   progressBar.value = 0
   cardImg.setAttribute("src", "assets/errorFile.svg")
   cardImg.setAttribute("alt", "Imagem que representa um arquivo não lido")
@@ -135,14 +142,16 @@ function addStylesWhenFileIsLoaded() {
   progressBar.value = 100
   cardImg.setAttribute("src", "assets/loadedFile.svg")
   cardImg.setAttribute("alt", "Imagem que representa o arquivo carregado")
+  bgOfcardImg.classList.remove("bgError")
   bgOfcardImg.classList.add("bgLoaded")
   porcentageOfcardFile.setAttribute("id", "msgLoaded")
   porcentageOfcardFile.textContent = "100%"
   progressBar.classList.remove("barLoading")
+  progressBar.classList.remove("barError")
   progressBar.classList.add("barLoaded")
 }
 
 // Criar lógica para diminuir o tamanho do texto e motrar o início com o final.
 // Guardar os arquivos, um objeto ou array com o nome, size, url
-// Adicionar um X caso o usuário queira cancelar o download (funciont abort)
-// Aparecer a opção de download quando passar o mouse por cima do card, depois de concluído
+// Adicionar uma lixeira para excluir o file
+// Fazer o multiply funcionar
