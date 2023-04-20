@@ -86,9 +86,10 @@ aside {
   gap: 1.2rem;
   max-width: 44rem;
   width: 100%;
-  height: 18rem;
+  max-height: 30rem;
   scroll-behavior: smooth;
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 article {

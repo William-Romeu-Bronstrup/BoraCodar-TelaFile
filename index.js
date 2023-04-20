@@ -7,14 +7,11 @@ const downloadFile = document.getElementById("downloadFile")
 
 let file = []
 
-while (downloadFile.hasChildNodes()) {
-  downloadFile.removeChild(downloadFile.firstChild)
-}
-
-!(function () {
+/*!(function () {
   let getData = localStorage.getItem("file")
 
   if (getData) {
+    console.log("entrou")
     getLocalData(getData)
   }
 })()
@@ -24,35 +21,57 @@ function getLocalData(getData) {
   file.map((item) => {
     asideTag.innerHTML += buildCards(item)
   })
-}
+}*/
 
 inputFile.addEventListener("change", (e) => {
   if (e.target.files[0] != undefined) {
+    let fileList = e.target.files
+
     let obj = {
-      name: e.target.files.name,
-      size: transformSize(e.target.files.size),
-      file: e.target.files,
+      name: "",
+      size: "",
+      files: ""
     }
 
-    file.push(obj)
-    console.log(obj)
+    for (let i of fileList) {
+      obj.name = fileList.item().name,
+      obj.size = transformSize(i.size),
+      obj.files = i
 
+
+      file.push(obj)
+
+    }
     const leitor = new FileReader()
 
-    readingFile(leitor, obj)
+    readingFile(leitor, file)
   }
 })
 
-async function readingFile(leitor, obj) {
-  try {
-    await leitor.readAsText(obj.file)
+ function readingFile(leitor, file) {
+  console.log(file)
+  
+    reading(file)
+    //await leitor.readAsText(file.file)
 
     leitor.addEventListener("loadend", () => {
       localStorage.setItem("file", JSON.stringify(file))
+
+      while (asideTag.hasChildNodes()) {
+        asideTag.removeChild(asideTag.firstChild)
+      }
+
+      file.map((item) => {
+        asideTag.innerHTML += buildCards(item)
+      })
     })
-  } catch (erro) {
-    console.log(erro)
-  }
+  } 
+
+
+function reading(file) {
+  file.map((item) => {
+    console.log(item)
+  })
 }
 
 function transformSize(size) {
@@ -60,13 +79,15 @@ function transformSize(size) {
     return `1 KB`
   }
 
-  if (size < Math.pow(10, 5)) {
+  if (size < Math.pow(10, 5) || size > Math.pow(10, 5)) {
     return `${(size / Math.pow(10, 3)).toFixed(2)} KB`
   }
 
   if (size > Math.pow(10, 6)) {
     return `${(size / Math.pow(10, 6)).toFixed(2)} MB`
   }
+
+  return "0"
 }
 
 function buildCards(item) {
