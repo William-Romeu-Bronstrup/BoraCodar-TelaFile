@@ -6,12 +6,11 @@ const inputFile = document.getElementById("inputFile")
 const downloadFile = document.getElementById("downloadFile")
 
 let file = []
-
-/*!(function () {
+let obj = {}
+!(function () {
   let getData = localStorage.getItem("file")
 
   if (getData) {
-    console.log("entrou")
     getLocalData(getData)
   }
 })()
@@ -21,58 +20,45 @@ function getLocalData(getData) {
   file.map((item) => {
     asideTag.innerHTML += buildCards(item)
   })
-}*/
+}
 
 inputFile.addEventListener("change", (e) => {
   if (e.target.files[0] != undefined) {
+    const leitor = new FileReader()
     let fileList = e.target.files
 
-    let obj = {
-      name: "",
-      size: "",
-      files: ""
+    for(let i = 0; i < fileList.length; i++) {
+
+      obj = {
+        name: fileList.item(i).name,
+        size: transformSize(fileList.item(i).size),
+        files: fileList.item(i)
+      }
+
+      file.unshift(obj)
     }
-
-    for (let i of fileList) {
-      obj.name = fileList.item().name,
-      obj.size = transformSize(i.size),
-      obj.files = i
-
-
-      file.push(obj)
-
-    }
-    const leitor = new FileReader()
 
     readingFile(leitor, file)
   }
 })
 
- function readingFile(leitor, file) {
+function readingFile(leitor, file) {
+
   console.log(file)
+  leitor.readAsText(file[0].files)
+      
+  leitor.addEventListener("loadend", () => {
+    localStorage.setItem("file", JSON.stringify(file))
   
-    reading(file)
-    //await leitor.readAsText(file.file)
-
-    leitor.addEventListener("loadend", () => {
-      localStorage.setItem("file", JSON.stringify(file))
-
-      while (asideTag.hasChildNodes()) {
-        asideTag.removeChild(asideTag.firstChild)
-      }
-
-      file.map((item) => {
+    while (asideTag.hasChildNodes()) {
+      asideTag.removeChild(asideTag.firstChild)
+    }
+    
+    file.map((item) => {
         asideTag.innerHTML += buildCards(item)
-      })
     })
-  } 
-
-
-function reading(file) {
-  file.map((item) => {
-    console.log(item)
   })
-}
+} 
 
 function transformSize(size) {
   if (size < Math.pow(10, 3)) {
