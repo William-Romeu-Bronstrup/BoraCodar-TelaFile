@@ -2,11 +2,11 @@ const mainTag = document.querySelector("main")
 const asideTag = document.querySelector("aside")
 
 const inputFile = document.getElementById("inputFile")
-
 const downloadFile = document.getElementById("downloadFile")
 
 let file = []
 let obj = {}
+
 !(function () {
   let getData = localStorage.getItem("file")
 
@@ -39,14 +39,13 @@ inputFile.addEventListener("change", (e) => {
     }
 
     readingFile(leitor, file)
+    
   }
 })
-
 function readingFile(leitor, file) {
 
-  console.log(file)
   leitor.readAsText(file[0].files)
-      
+  
   leitor.addEventListener("loadend", () => {
     localStorage.setItem("file", JSON.stringify(file))
   
@@ -55,10 +54,18 @@ function readingFile(leitor, file) {
     }
     
     file.map((item) => {
-        asideTag.innerHTML += buildCards(item)
+      asideTag.innerHTML += buildCards(item)      
     })
+
   })
-} 
+}
+
+function diviseName(name) {
+  let firstPart = name.slice(0, 18)
+  let secondPart = name.slice(-8)
+  
+  return firstPart.concat("...").concat(secondPart)
+}
 
 function transformSize(size) {
   if (size < Math.pow(10, 3)) {
@@ -87,7 +94,7 @@ function buildCards(item) {
         />
       </div>
       <div>
-        <p>${item.name}</p>
+        <p>${item.name.length > 36 ? diviseName(item.name) : item.name}</p>
         <span>${item.size}</span>
 
         <footer>
@@ -99,6 +106,5 @@ function buildCards(item) {
   `
 }
 
-// Criar lógica para diminuir o tamanho do texto e motrar o início com o final.
+// Criar lógica para diminuir o tamanho do texto e motrar o início com o final (feito).
 // Adicionar uma lixeira para excluir o file
-// Fazer o multiply funcionar
