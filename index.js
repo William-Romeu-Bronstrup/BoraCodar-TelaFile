@@ -27,43 +27,41 @@ inputFile.addEventListener("change", (e) => {
     const leitor = new FileReader()
     let fileList = e.target.files
 
-    for(let i = 0; i < fileList.length; i++) {
-
+    for (let i = 0; i < fileList.length; i++) {
       obj = {
         name: fileList.item(i).name,
         size: transformSize(fileList.item(i).size),
-        files: fileList.item(i)
+        files: fileList.item(i),
+        id: Number((Math.random() * 10).toFixed(2).replace(".", "")),
       }
 
       file.unshift(obj)
     }
 
     readingFile(leitor, file)
-    
   }
 })
-function readingFile(leitor, file) {
 
+function readingFile(leitor, file) {
   leitor.readAsText(file[0].files)
-  
+
   leitor.addEventListener("loadend", () => {
     localStorage.setItem("file", JSON.stringify(file))
-  
+
     while (asideTag.hasChildNodes()) {
       asideTag.removeChild(asideTag.firstChild)
     }
-    
-    file.map((item) => {
-      asideTag.innerHTML += buildCards(item)      
-    })
 
+    file.map((item) => {
+      asideTag.innerHTML += buildCards(item)
+    })
   })
 }
 
 function diviseName(name) {
   let firstPart = name.slice(0, 18)
   let secondPart = name.slice(-8)
-  
+
   return firstPart.concat("...").concat(secondPart)
 }
 
@@ -83,6 +81,29 @@ function transformSize(size) {
   return "0"
 }
 
+function removeFile(id) {
+  let deleteFile = file.filter((item) => {
+    if (item.id !== id) {
+      return file.unshift()
+    }
+  })
+
+  localStorage.setItem("file", JSON.stringify(deleteFile))
+
+  while (asideTag.hasChildNodes()) {
+    asideTag.removeChild(asideTag.firstChild)
+  }
+
+  let getData = localStorage.getItem("file")
+
+  file = []
+
+  file.push(...JSON.parse(getData))
+  file.map((item) => {
+    asideTag.innerHTML += buildCards(item)
+  })
+}
+
 function buildCards(item) {
   return `
     <article>
@@ -100,11 +121,14 @@ function buildCards(item) {
         <footer>
           <progress class="barLoaded" max="100" value="100"></progress>
           <span id="msgLoaded">100%</span>
+          <img
+            src="assets/delete.svg"
+            alt="Imagem de uma lixeira para excluir um arquivo"
+            id="imgTrash"
+            onclick="removeFile(${item.id})"
+          />
         </footer>
       </div>
     </article>
   `
 }
-
-// Criar lógica para diminuir o tamanho do texto e motrar o início com o final (feito).
-// Adicionar uma lixeira para excluir o file
