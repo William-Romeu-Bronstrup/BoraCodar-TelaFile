@@ -10,9 +10,11 @@ let obj = {}
 !(function () {
   let getData = localStorage.getItem("file")
 
-  if (getData) {
-    getLocalData(getData)
+  if (getData == null || getData.length <= 2) {
+    return
   }
+
+  getLocalData(getData)
 })()
 
 function getLocalData(getData) {
@@ -25,47 +27,43 @@ function getLocalData(getData) {
 inputFile.addEventListener("change", (e) => {
   if (e.target.files[0] != undefined) {
     const leitor = new FileReader()
-    let fileList = e.target.files
+    const fileList = e.target.files
 
-    for (let i = 0; i < fileList.length; i++) {
-      obj = {
-        name: fileList.item(i).name,
-        size: transformSize(fileList.item(i).size),
-        files: fileList.item(i),
-        id: Number((Math.random() * 10).toFixed(2).replace(".", "")),
-      }
-
-      file.unshift(obj)
+    obj = {
+      name: fileList.item(0).name,
+      size: transformSize(fileList.item(0).size),
+      id: Number((Math.random() * 10).toFixed(2).replace(".", "")),
     }
 
-    readingFile(leitor, file)
+    readingFile(leitor, fileList.item(0))
   }
 })
 
-function readingFile(leitor, file) {
-  leitor.readAsText(file[0].files)
+function readingFile(leitor, fileSelecionado) {
+  leitor.readAsText(fileSelecionado)
 
   leitor.addEventListener("loadend", () => {
-    localStorage.setItem("file", JSON.stringify(file))
-
     while (asideTag.hasChildNodes()) {
       asideTag.removeChild(asideTag.firstChild)
     }
 
-    const blob = new Blob([leitor.result], {
-      type: "octet/stream",
-    })
+    obj = {
+      ...obj,
+      result: leitor.result,
+    }
 
-    let url = URL.createObjectURL(blob)
+    file.unshift(obj)
+
+    localStorage.setItem("file", JSON.stringify(file))
 
     file.map((item) => {
-      asideTag.innerHTML += buildCards(item, url) 
+      asideTag.innerHTML += buildCards(item)
     })
   })
 }
 
 function diviseName(name) {
-  let firstPart = name.slice(0, 18)
+  let firstPart = name.slice(0, 12)
   let secondPart = name.slice(-8)
 
   return firstPart.concat("...").concat(secondPart)
@@ -80,7 +78,7 @@ function transformSize(size) {
     return `${(size / Math.pow(10, 3)).toFixed(2)} KB`
   }
 
-  if (size > Math.pow(10, 6)) {
+  if (size > Math.pow(10, 5)) {
     return `${(size / Math.pow(10, 6)).toFixed(2)} MB`
   }
 
@@ -110,9 +108,13 @@ function removeFile(id) {
   })
 }
 
-function buildCards(item, url) {
+function buildCards(item) {
+  // Precisa criar um novo blob cada vez a página é recarregada
+  const blob = new Blob([item.result], {
+    type: "octet/stream",
+  })
 
-  console.log(url)
+  let url = URL.createObjectURL(blob)
 
   return `
     <article>
@@ -124,24 +126,28 @@ function buildCards(item, url) {
         />
       </div>
       <div id="cardFile">
-        <p>${item.name.length > 28 ? diviseName(item.name) : item.name}</p>
+        <p>${item.name.length > 25 ? diviseName(item.name) : item.name}</p>
         <span>${item.size}</span>
-        <a
-          href=${url}
-          download=${item.name}
-        >
-        Download
-        </a>
 
         <footer>
           <progress class="barLoaded" max="100" value="100"></progress>
           <span id="msgLoaded">100%</span>
           <img
             src="assets/delete.svg"
-            alt="Imagem de uma lixeira para excluir um arquivo"
-            id="imgTrash"
+            alt="Imagem de uma lixeira vermelha para excluir um arquivo"
+            class="imgFeatures"
+            title="Deletar Arquivo"
             onclick="removeFile(${item.id})"
           />
+          <a href=${url} download=${item.name}>
+            <img
+              class="imgFeatures"
+              src="assets/downloadFiles.png"
+              alt="Imagem de uma seta para baixo roxa para fazer o download de um arquivo"
+              title="Baixar Arquivo"
+            />
+          </a>
+          
         </footer>
       </div>
     </article>

@@ -212,12 +212,12 @@ input[type="file"] {
   color: var(--color-msg-error);
 }
 
-#imgTrash {
-  width: 22px;
+.imgFeatures {
+  max-width: 24px;
   cursor: pointer;
   transition: 0.2s;
 }
 
-#imgTrash:hover {
+.imgFeatures:hover {
   transform: scale(1.2);
 }
