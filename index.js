@@ -42,8 +42,6 @@ inputFile.addEventListener("change", (e) => {
   }
 })
 
-
-
 function readingFile(leitor, file) {
   leitor.readAsText(file[0].files)
 
@@ -58,15 +56,10 @@ function readingFile(leitor, file) {
       type: "octet/stream",
     })
 
-    const tagA = document.createElement("a")
-    tagA.textContent = "Download"
-
-    tagA.href = URL.createObjectURL(blob)
-    tagA.download = file[0].name
+    let url = URL.createObjectURL(blob)
 
     file.map((item) => {
-      asideTag.innerHTML += buildCards(item)
-      asideTag.appendChild(tagA) 
+      asideTag.innerHTML += buildCards(item, url) 
     })
   })
 }
@@ -117,7 +110,10 @@ function removeFile(id) {
   })
 }
 
-function buildCards(item) {
+function buildCards(item, url) {
+
+  console.log(url)
+
   return `
     <article>
       <div class="bgLoading bgLoaded">
@@ -127,9 +123,15 @@ function buildCards(item) {
           id="imgFile"
         />
       </div>
-      <div>
-        <p>${item.name.length > 36 ? diviseName(item.name) : item.name}</p>
+      <div id="cardFile">
+        <p>${item.name.length > 28 ? diviseName(item.name) : item.name}</p>
         <span>${item.size}</span>
+        <a
+          href=${url}
+          download=${item.name}
+        >
+        Download
+        </a>
 
         <footer>
           <progress class="barLoaded" max="100" value="100"></progress>

@@ -113,7 +113,7 @@ article div:nth-child(2) {
 }
 
 article div:nth-child(2) p {
-  width: 15rem;
+  width: 100%;
   flex-wrap: wrap;
   font-weight: 700;
   font-size: 1.4rem;
