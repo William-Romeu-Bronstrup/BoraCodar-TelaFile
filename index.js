@@ -42,6 +42,8 @@ inputFile.addEventListener("change", (e) => {
   }
 })
 
+
+
 function readingFile(leitor, file) {
   leitor.readAsText(file[0].files)
 
@@ -52,8 +54,19 @@ function readingFile(leitor, file) {
       asideTag.removeChild(asideTag.firstChild)
     }
 
+    const blob = new Blob([leitor.result], {
+      type: "octet/stream",
+    })
+
+    const tagA = document.createElement("a")
+    tagA.textContent = "Download"
+
+    tagA.href = URL.createObjectURL(blob)
+    tagA.download = file[0].name
+
     file.map((item) => {
       asideTag.innerHTML += buildCards(item)
+      asideTag.appendChild(tagA) 
     })
   })
 }
